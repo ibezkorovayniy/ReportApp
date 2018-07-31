@@ -15,26 +15,15 @@ public class DBCreator {
 
     private Logger logger = LoggerFactory.getLogger(DBCreator.class);
 
-    public void createDB(Connection connection) {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute("DROP SCHEMA IF EXISTS COMPANY_A");
-            statement.execute("DROP SCHEMA IF EXISTS COMPANY_B");
-
-            statement.execute("CREATE SCHEMA IF NOT EXISTS COMPANY_A");
-            statement.execute("CREATE SCHEMA IF NOT EXISTS COMPANY_B");
-
-            statement.execute("SET SCHEMA COMPANY_A");
+    public void createDB(String company, Connection connection) {
+        try(Statement statement = connection.createStatement();) {
+            statement.execute("DROP SCHEMA IF EXISTS " + company +  " CASCADE");
+            statement.execute("CREATE SCHEMA IF NOT EXISTS " + company);
+            statement.execute("SET SCHEMA " + company);
             executeScript("/SQL/Staff.sql", statement);
             executeScript("/SQL/Departments.sql", statement);
             executeScript("/SQL/Employees.sql", statement);
-            logger.info("Tables for Company_A created");
-
-            statement.execute("SET SCHEMA COMPANY_B");
-            executeScript("/SQL/Staff.sql", statement);
-            executeScript("/SQL/Departments.sql", statement);
-            executeScript("/SQL/Employees.sql", statement);
-            logger.info("Tables for Company_B created");
+            logger.info("Tables for {} created", company);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

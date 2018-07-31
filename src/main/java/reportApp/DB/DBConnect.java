@@ -14,14 +14,16 @@ public class DBConnect {
     private static final String URL = rb.getString("URL");
     private static final String USER = rb.getString("username");
     private static final String PASS = rb.getString("password");
+    private static final String DRIVER = rb.getString("driver");
     private static Logger logger = LoggerFactory.getLogger(DBConnect.class);
 
     static {
         try {
-            Class.forName("org.h2.Driver");
-            logger.info("Driver for H2 loaded");
+            Class.forName(DRIVER);
+            logger.info("Driver for H2 Database loaded");
         } catch (ClassNotFoundException e) {
             logger.error("Driver for database not found");
+            throw new RuntimeException(e);
         }
     }
 
