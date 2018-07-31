@@ -1,8 +1,7 @@
-package reportApp.DB;
+package reportapp.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reportApp.reportApp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
