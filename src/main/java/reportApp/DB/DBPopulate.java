@@ -32,7 +32,7 @@ public class DBPopulate {
 
 
     private void populateStaff(Statement stmt) throws SQLException {
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 1000000; i++) {
             int age = ThreadLocalRandom.current().nextInt(20, 60 + 1);
             stmt.execute("INSERT INTO STAFF VALUES("
                     + i + ", 'employee" + i + "', " + age + ")"
@@ -42,20 +42,19 @@ public class DBPopulate {
 
     private void populateDepartments(Statement stmt) throws SQLException {
         for (int i = 1; i <= 20; i++) {
+            int district = ThreadLocalRandom.current().nextInt(1, 10 + 1);
             stmt.execute("INSERT INTO DEPARTMENTS VALUES("
-                    + i + ", 'Department" + i + "', 'District" + i + "')"
+                    + i + ", 'Department" + i + "', 'District" + district + "')"
             );
         }
     }
 
     private void populateEmployees(Statement stmt) throws SQLException {
-        for(int i = 1; i <= 1000; i++) {
+        for(int i = 1; i <= 1000000; i++) {
             int depId = ThreadLocalRandom.current().nextInt(1, 20 + 1);
             stmt.execute("INSERT INTO EMPLOYEES VALUES(" + i + ", " + depId + ")");
         }
-
-
-        }
+    }
 }
 
 
