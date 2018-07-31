@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DBPopulate {
 
     private Logger logger = LoggerFactory.getLogger(DBPopulate.class);
+    private boolean isPopulated = false;
 
     public void populateCompany(String company, Connection connection) {
         try (Statement stmt = connection.createStatement()) {
@@ -22,11 +23,15 @@ public class DBPopulate {
             logger.info("Table 'Departments' for {} populated", company);
             populateEmployees(stmt);
             logger.info("Table 'Employees' for {} populated", company);
+            isPopulated = true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public boolean isPopulated() {
+        return isPopulated;
+    }
 
     private void populateStaff(Statement stmt) throws SQLException {
         for (int i = 1; i <= 1000000; i++) {

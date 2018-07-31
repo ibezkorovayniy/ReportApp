@@ -15,6 +15,7 @@ import java.sql.Statement;
 public class DBCreator {
 
     private Logger logger = LoggerFactory.getLogger(DBCreator.class);
+    private boolean isCreated = false;
 
     public void createDB(String company, Connection connection) {
         try(Statement stmt = connection.createStatement();) {
@@ -25,6 +26,7 @@ public class DBCreator {
             executeScript("/SQL/Departments.sql", stmt);
             executeScript("/SQL/Employees.sql", stmt);
             logger.info("Tables for {} created", company);
+            isCreated = true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,5 +45,9 @@ public class DBCreator {
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean isCreated() {
+        return isCreated;
     }
 }
